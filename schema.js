@@ -4,17 +4,18 @@ directive @hasRole(role: [String]) on QUERY | FIELD
 directive @isOwner on QUERY | FIELD
 
 type Query {
+    getMe: User @isAuthenticated
     getUser(id:Int!): User @hasRole(role: ["ADMIN"]) @isAuthenticated
-    allUsers: [User] @hasRole(role: ["USER"]) @isAuthenticated
+    getAllUsers: [User] @hasRole(role: ["ADMIN"]) @isAuthenticated
     getFortuneCookie: String @cacheControl(maxAge: 5) @isAuthenticated
     getUserPosts(user: Int): [Post] @isAuthenticated
-    getMyPosts: [Post] @isAuthenticated
-    getPosts: [Post] @isAuthenticated @isOwner
+    getPosts: [Post] @isAuthenticated 
     getAllPosts: [Post] @hasRole(role: ["ADMIN"]) 
 }
 type Mutation {
     addUser(id: Int,username: String!,password: String!, email: String!, role: String!): AuthPayload
     login (username: String!, password: String!): AuthPayload
+    editUser(id:Int!, username: String, email: String, role: String): Int
     removeUser(id:Int!):User 
     addPost(id:Int, title: String, text: String, public: Boolean): Post @hasRole(role: "USER")
     removePost(id:Int!):Post

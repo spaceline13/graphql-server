@@ -10,19 +10,10 @@ export const resolvers = {
             });
             return posts;
         },
-        getMyPosts(_,args,{user}){
+        getPosts(_,args,{user}){
             var posts = Post.findAll({
                 where:{
-                    userId:user.id
-                }
-            });
-            return posts;
-        },
-        getPosts(_,args,ctx){
-            console.log(ctx);
-            var posts = Post.findAll({
-                where:{
-                    public:1
+                    $or: [{public:1}, {userId:user.id}]
                 }
             });
             return posts;

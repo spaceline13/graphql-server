@@ -8,22 +8,18 @@ import {resolvers as userResolvers} from './resolvers/UserResolver';
 import {resolvers as postResolvers} from './resolvers/PostResolver';
 import {resolvers as testApiResolvers} from './resolvers/TestAPIResolver';
 import {authorization} from './directives/authorization';
-import graphqlCMS from 'graphql-auto-generating-cms/lib/middleware';
+
 require('dotenv').config()
 
-const ENGINE_API_KEY = 'service:spaceline13-2311:83-z3hTB_OYOhkVXCWiNmA'; // TODO
+// for future connection with the engine for api statistics
+const ENGINE_API_KEY = 'service:spaceline13-2311:83-z3hTB_OYOhkVXCWiNmA';
 
-const auth = jwt({
-    secret: process.env.JWT_SECRET,
-    credentialsRequired: false
-});
-
+//schema
 const typeDefs = schema;
 const resolvers = mergeResolvers([userResolvers,postResolvers,testApiResolvers]);
 const directiveResolvers = authorization;
 
-
-// yoga
+// yoga server
 const server = new GraphQLServer({
     typeDefs,
     resolvers,
@@ -33,12 +29,16 @@ const server = new GraphQLServer({
         return {user};
     }
 });
-/*let config = {
-    schema: printSchema(schema),
-}*/
+
+// auth
+const auth = jwt({
+    secret: process.env.JWT_SECRET,
+    credentialsRequired: false
+});
 server.express.post(server.options.endpoint, auth);
 server.express.use(compression());
-//server.express.use('/graphql_cms_endpoint', graphqlCMS(config));
+
+// start server
 server.start({
     tracing: true,
     cacheControl: true,
