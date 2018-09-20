@@ -2,11 +2,14 @@ import { GraphQLServer } from 'graphql-yoga';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 const compression = require('compression')
 import jwt from 'express-jwt';
-import { mergeResolvers  } from 'merge-graphql-schemas';
+import { mergeResolvers, mergeTypes } from 'merge-graphql-schemas';
 import {schema} from './schema.js';
 import {resolvers as userResolvers} from './resolvers/UserResolver';
 import {resolvers as postResolvers} from './resolvers/PostResolver';
 import {resolvers as testApiResolvers} from './resolvers/TestAPIResolver';
+
+const typesArray = fileLoader(path.join(__dirname, './types'));
+
 import {authorization} from './directives/authorization';
 
 require('dotenv').config()

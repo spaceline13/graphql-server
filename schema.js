@@ -7,7 +7,6 @@ type Query {
     getMe: User @isAuthenticated
     getUser(id:Int!): User @hasRole(role: ["ADMIN"]) @isAuthenticated
     getAllUsers: [User] @hasRole(role: ["ADMIN"]) @isAuthenticated
-    getFortuneCookie: String @cacheControl(maxAge: 5) @isAuthenticated
     getUserPosts(user: Int): [Post] @isAuthenticated
     getPosts: [Post] @isAuthenticated 
     getAllPosts: [Post] @hasRole(role: ["ADMIN"]) 
@@ -20,20 +19,7 @@ type Mutation {
     addPost(id:Int, title: String, text: String, public: Boolean): Post @hasRole(role: "USER")
     removePost(id:Int!):Post
 }
-type AuthPayload {
-    token: String
-    user: User
-}
-type User {
-    id: Int
-    username: String
-    password: String
-    email: String
-    firstName: String
-    lastName: String
-    posts: [Post]
-    role: String
-}
+
 type Post {
     id: Int
     title: String
