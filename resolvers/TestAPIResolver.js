@@ -1,6 +1,6 @@
 import {FortuneCookie} from "../connectors/TestAPI";
 
-export const resolvers = {
+export default {
     Query: {
         getFortuneCookie(){
             return FortuneCookie.getOne();

@@ -1,15 +1,7 @@
 import {Post} from "../connectors/Post";
 
-export const resolvers = {
+export default {
     Query: {
-        getUserPosts(_,args, {user}){
-            var posts = Post.findAll({
-                where:{
-                    userId:args.id
-                }
-            });
-            return posts;
-        },
         getPosts(_,args,{user}){
             var posts = Post.findAll({
                 where:{

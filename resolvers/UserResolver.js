@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const jsonwebtoken = require('jsonwebtoken')
 require('dotenv').config()
 
-export const resolvers = {
+export default {
     Query: {
         getUser(_, args) {
             return User.find({ where: args });
