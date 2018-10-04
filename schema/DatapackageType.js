@@ -1,7 +1,13 @@
 export default `
+scalar Upload
+
 type Query {
     getAllDatapackages:[Datapackage] 
     getDatapackage(name:String!): Datapackage
+}
+
+type Mutation{
+    uploadDatapackage(file:Upload!): String    
 }
 
 type Datapackage {
@@ -12,8 +18,13 @@ type Datapackage {
     version: String
     author: String
     license: [License]
-    keywords: [String]
+    keywords: [Keyword]
     resources: [Resource]
+}
+
+type Keyword {
+	label: String
+	value: String
 }
 
 type License {

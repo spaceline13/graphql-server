@@ -1,11 +1,11 @@
 export default `
 type Query {
     getPosts: [Post] @isAuthenticated
-    getAllPosts: [Post] @hasRole(role: ["ADMIN"])
-    getFortuneCookie: String @cacheControl(maxAge: 5) @isAuthenticated
+    getAllPosts: [Post] 
+    getFortuneCookie: String  @isAuthenticated
 }
 type Mutation {
-    addPost(id:Int, title: String, text: String, public: Boolean): Post @hasRole(role: "USER")
+    addPost(id:Int, title: String, text: String, public: Boolean): Post
     removePost(id:Int!):Post
 }
 

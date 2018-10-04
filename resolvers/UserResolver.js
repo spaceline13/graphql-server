@@ -1,5 +1,5 @@
 import {User} from "../connectors/User";
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const jsonwebtoken = require('jsonwebtoken')
 require('dotenv').config()
 
@@ -70,7 +70,7 @@ export default {
                 }
             });
             if (!user) {
-                throw new Error('No user with that email')
+                throw new Error('No user with that username')
             }
             const valid = await bcrypt.compare(args.password, user.password);
             if (!valid) {
