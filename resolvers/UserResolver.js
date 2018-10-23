@@ -1,6 +1,7 @@
 import {User} from "../connectors/User";
-const bcrypt = require('bcryptjs')
-const jsonwebtoken = require('jsonwebtoken')
+import {sendEmail} from '../lib/emailHelper';
+import bcrypt from 'bcryptjs';
+import jsonwebtoken from 'jsonwebtoken';
 require('dotenv').config()
 
 export default {
@@ -38,6 +39,7 @@ export default {
                             process.env.JWT_SECRET,
                             { expiresIn: '1y' }
                         );
+                        sendEmail('User Management',args.email,'Registration complete','<b>Congratulations you have been registered</b>');
                         console.log('success',user);
                     }).catch(function(err) {
                         console.log(err);

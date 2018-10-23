@@ -26,6 +26,7 @@
     "mv": "^2.1.1",
     "mysql": "^2.16.0",
     "node-fetch": "^2.2.0",
+    "nodemailer": "^4.6.8",
     "path": "^0.12.7",
     "sequelize": "^4.38.1",
     "sequelize-ssh-tunnel": "git+https://bitbucket.org/freshrealm/sequelize-ssh-tunnel.git",

@@ -58,7 +58,13 @@ server.express.post('/upload', function(req, res) {
 		});
 	}
 });
-
+server.express.post('/download', function(req, res){
+    var file = __dirname + '/upload-folder/dramaticpenguin.MOV';
+    var url = require('url');
+    var url_parts = url.parse(req.url, true);
+    console.log(url_parts);
+    //res.download(file); // Set disposition and send it.
+});
 // start server
 server.start({
     tracing: true,
