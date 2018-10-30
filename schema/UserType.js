@@ -5,9 +5,9 @@ type Query {
     getAllUsers: [User] @hasRole(role: ["ADMIN"]) @isAuthenticated
 }
 type Mutation {
-    addUser(id: Int,username: String!,password: String!, email: String!, role: String!): AuthPayload
+    addUser(id: Int,username: String!,password: String!, email: String!): User
     login (username: String!, password: String!): AuthPayload
-    editUser(id:Int!, username: String, email: String, role: String): Int
+    editUser(id:Int!, username: String, email: String, role: String, approved:String): Int
     removeUser(id:Int!):User
 }
 
@@ -24,5 +24,6 @@ type User {
     lastName: String
     posts: [Post]
     role: String
+    approved: String
 }
 `

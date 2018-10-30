@@ -8,31 +8,43 @@ type Query {
 }
 
 type Mutation{
-    uploadDataset(file:Upload!): Resource @isAuthenticated
-    uploadDatapackage(datapackage:DatapackageInput!): Boolean @isAuthenticated    
+    uploadResource(file:Upload!): [Resource] @isAuthenticated
+    uploadDatapackage(datapackage:DatapackageInput!): String @isAuthenticated   
+    setDoi(name:String!, doi:String!): Boolean @isAuthenticated  
+    deleteDatapackage(name:String!): Boolean @isAuthenticated
 }
 
 type Datapackage {
     name: String
     title: String
-    profile: String
+    creator: [String]
     description: String
-    version: String
-    author: String
+    publisher: [String]
     license: [License]
-    keywords: [Keyword]
+    contributor: [String]
+    subject: [Keyword]
+    date: String
+    type: String
+    sources: [String]
+    relation: [String]
+    rights: String
+    doi: String
     resources: [Resource]
 }
 input DatapackageInput {
     name: String
     title: String
-    profile: String
+    creator: [String]
     description: String
-    version: String
-    author: String
-    date: String
+    publisher: [String]
     license: [LicenseInput]
-    keywords: [KeywordInput]
+    contributor: [String]
+    subject: [KeywordInput]
+    date: String
+    type: String
+    sources: [String]
+    relation: [String]
+    rights: String
     resources: [ResourceInput]
 }
 

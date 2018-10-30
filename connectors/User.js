@@ -11,7 +11,8 @@ const UserModel = db.define('user', {
     email: { type:Sequelize.STRING },
     firstName: { type: Sequelize.STRING },
     lastName: { type: Sequelize.STRING },
-    role: {type: Sequelize.STRING }
+    role: {type: Sequelize.STRING },
+    approved: {type: Sequelize.STRING}
 });
 
 db.sync();
