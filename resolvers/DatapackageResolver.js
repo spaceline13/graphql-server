@@ -40,7 +40,7 @@ export default {
         getDatapackage(_,args, {user}){
             var name = args.name;
             var datapackage = null;
-            /*var path = './data/timos';
+            var path = './data/'+user.username;
             var items = fs.readdirSync(path);
             items.forEach(item=>{
                 var files = fs.readdirSync(path+'/'+item);
@@ -53,7 +53,7 @@ export default {
                         }
                     }
                 })
-            });*/
+            });
             return datapackage;
         }
     },
@@ -76,13 +76,22 @@ export default {
                 data[field] = args.datapackage[field].isArray?JSON.parse(args.datapackage[field]):args.datapackage[field];
             }
 
-			/*var promise = moveResources(data.resources,user.username,data.name);
-            promise.then(function(value){
-                data.resources = value;
-                makeJSONFile(data,user.username,data.name,'datapackage.json');
-                //console.log(data.resources,'letssee');
-            });*/
 			var resources = await moveResources(data.resources,user.username,data.name);
+            data.resources = resources;
+            makeJSONFile(data,user.username,data.name,'datapackage.json');
+            var XML = generateXML(data);
+            return XML;
+        },
+        async replaceDatapackage(_,args,{user}){
+            var data = {};
+            if(!args.datapackage.name){
+                return false;
+            }
+            for (var field in args.datapackage){
+                data[field] = args.datapackage[field].isArray?JSON.parse(args.datapackage[field]):args.datapackage[field];
+            }
+
+            var resources = await moveResources(data.resources,user.username,data.name);
             data.resources = resources;
             makeJSONFile(data,user.username,data.name,'datapackage.json');
             var XML = generateXML(data);
@@ -120,7 +129,6 @@ export default {
                     res = rimraf.sync(path+'/'+item);
                 }
             });
-            console.log(res);
             return res;
         },
     }

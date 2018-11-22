@@ -10,6 +10,7 @@ type Query {
 type Mutation{
     uploadResource(file:Upload!): [Resource] @isAuthenticated
     uploadDatapackage(datapackage:DatapackageInput!): String @isAuthenticated   
+    replaceDatapackage(datapackage:DatapackageInput!): String @isAuthenticated   
     setDoi(name:String!, doi:String!): Boolean @isAuthenticated  
     deleteDatapackage(name:String!): Boolean @isAuthenticated
 }

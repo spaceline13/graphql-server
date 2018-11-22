@@ -33,7 +33,7 @@ export default {
                     newId = parseInt(entries[0].dataValues.id)+1;
                 newUser['id'] = newId;
                 await User.create( newUser ).then(function(user) {
-                        sendEmail('User Management',args.email,'Registration complete','<b>Congratulations you have been registered</b>');
+                        //sendEmail('User Management',args.email,'Registration complete','<b>Congratulations you have been registered</b>');
                         console.log('success',user);
                     }).catch(function(err) {
                         console.log(err);
@@ -77,7 +77,7 @@ export default {
             const token = jsonwebtoken.sign(
                 { id: user.id, username: user.username },
                 process.env.JWT_SECRET,
-                { expiresIn: '1y' }
+                { expiresIn: '12h' }
             );
             return {user:user, token:token};
         }
