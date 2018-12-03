@@ -11,7 +11,7 @@ var tunnelConfig = {
     host: '18.188.111.81',
     port: 22,
     username: 'bitnami',
-    privateKey: readFileSync(process.env.HOME + '\\OneDrive\ \-\ Agroknow\ IKE\\projects\\k2p\\server\\gwpp')
+    privateKey: readFileSync('./gwpp')
 };
 var sequelizeTunnelService = new SequelizeTunnelService(dbConfig, tunnelConfig);
 

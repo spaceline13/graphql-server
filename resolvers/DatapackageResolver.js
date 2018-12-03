@@ -119,7 +119,6 @@ export default {
             return res;
         },
         deleteDatapackage(_,args,{user}){
-            console.log('del',args);
             var res = false;
             var path = './data/'+user.username;
             var myPackage = null;

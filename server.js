@@ -1,4 +1,5 @@
 import { GraphQLServer } from 'graphql-yoga';
+import proxy from 'http-proxy-middleware';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 const compression = require('compression')
 import jwt from 'express-jwt';
@@ -7,9 +8,9 @@ import {fileLoader, mergeResolvers, mergeTypes } from 'merge-graphql-schemas';
 const typesArray = fileLoader(path.join(__dirname, './schema'));
 const resolversArray = fileLoader(path.join(__dirname, './resolvers'));
 const fileUpload = require('express-fileupload');
+import fs from 'fs';
 import {authorization} from './directives/authorization';
 import cors from 'cors';
-import fs from 'fs';
 import {uploadForUser} from './lib/fileHelper';
 require('dotenv').config()
 
@@ -40,6 +41,13 @@ const auth = jwt({
 server.express.post(server.options.endpoint, auth);
 server.express.use(compression());
 server.express.use(cors());
+server.express.use('/dataverse',proxy({
+    pathRewrite: {
+        '^/dataverse/': '/'
+    },
+    target: 'https://demo.dataverse.org',
+    secure: false
+}));
 
 //fileupload
 //server.express.use(fileUpload());
@@ -58,16 +66,17 @@ server.express.post('/upload', function(req, res) {
 		});
 	}
 });
-server.express.post('/download', function(req, res){
+/*server.express.post('/download', function(req, res){
     var file = __dirname + '/upload-folder/dramaticpenguin.MOV';
     var url = require('url');
     var url_parts = url.parse(req.url, true);
     console.log(url_parts);
     //res.download(file); // Set disposition and send it.
-});
+});*/
+
 // start server
 server.start({
     tracing: true,
     cacheControl: true,
     port:  2000
-}, () => console.log('GraphQL Server Server is running on localhost:6000'))
+}, () => console.log('GraphQL Server Server is running on localhost:2000'))

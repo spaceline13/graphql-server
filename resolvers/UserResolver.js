@@ -77,7 +77,7 @@ export default {
             const token = jsonwebtoken.sign(
                 { id: user.id, username: user.username },
                 process.env.JWT_SECRET,
-                { expiresIn: '12h' }
+                { expiresIn: 360 } //6mins
             );
             return {user:user, token:token};
         }
