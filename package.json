@@ -37,6 +37,7 @@
     "rimraf": "^2.6.2",
     "sequelize": "^4.38.1",
     "sequelize-ssh-tunnel": "git+https://bitbucket.org/freshrealm/sequelize-ssh-tunnel.git",
+    "simple-node-logger": "^0.93.40",
     "sqlite": "^3.0.0",
     "xml": "^1.0.1"
   },

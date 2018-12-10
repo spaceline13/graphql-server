@@ -27,7 +27,7 @@ export default {
                 var newId = 1;
                 if (entries.length>0)
                     newId = parseInt(entries[0].dataValues.id)+1;
-                console.log(user.id);
+                //console.log(user.id);
                 const newPost = {id:newId, title: args.title, text: args.text, votes: 0, userId: user.id, public:args.public};
                 Post.create(newPost);
                 return newPost;

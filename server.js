@@ -12,6 +12,7 @@ import fs from 'fs';
 import {authorization} from './directives/authorization';
 import cors from 'cors';
 import {uploadForUser} from './lib/fileHelper';
+import {log} from './lib/logger';
 require('dotenv').config()
 
 // for future connection with the engine for api statistics
@@ -56,7 +57,6 @@ server.express.post('/upload', function(req, res) {
         return res.status(400).send('No files were uploaded.');
 
 	for (var file in req.files) {
-		console.log(req.files[file]);
 		req.files[file].mv('./data/'+file, function(err) {
 			if (err)
 				return res.status(500).send(err);
@@ -79,4 +79,4 @@ server.start({
     tracing: true,
     cacheControl: true,
     port:  2000
-}, () => console.log('GraphQL Server Server is running on localhost:2000'))
+}, () => log.info('GraphQL Server Server is running on localhost:2000'));

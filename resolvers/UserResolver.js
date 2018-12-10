@@ -2,6 +2,7 @@ import {User} from "../connectors/User";
 import {sendEmail} from '../lib/emailHelper';
 import bcrypt from 'bcryptjs';
 import jsonwebtoken from 'jsonwebtoken';
+import {log} from '../lib/logger';
 require('dotenv').config()
 
 export default {
@@ -33,11 +34,11 @@ export default {
                     newId = parseInt(entries[0].dataValues.id)+1;
                 newUser['id'] = newId;
                 await User.create( newUser ).then(function(user) {
-                        //sendEmail('User Management',args.email,'Registration complete','<b>Congratulations you have been registered</b>');
-                        console.log('success',user);
-                    }).catch(function(err) {
-                        console.log(err);
-                    });
+                    //sendEmail('User Management',args.email,'Registration complete','<b>Congratulations you have been registered</b>');
+                    log.info('added user',user);
+                }).catch(function(err) {
+                    log.warn(err);
+                });
             });
             return newUser
         },
@@ -65,13 +66,16 @@ export default {
                 }
             });
             if (!user) {
-                throw new Error('No user with that username')
+                log.warn(args.username,' No user with that username');
+                throw new Error('No user with that username');
             }
             const valid = await bcrypt.compare(args.password, user.password);
             if (!valid) {
+                log.warn(args.password,' Incorrect password');
                 throw new Error('Incorrect password')
             }
             if(user.approved=='0'){
+                log.warn(args.username,' User awaits approval from admin');
                 throw new Error('User awaits approval from admin')
             }
             const token = jsonwebtoken.sign(

@@ -75,9 +75,10 @@ export default {
             for (var field in args.datapackage){
                 data[field] = args.datapackage[field].isArray?JSON.parse(args.datapackage[field]):args.datapackage[field];
             }
-
-			var resources = await moveResources(data.resources,user.username,data.name);
-            data.resources = resources;
+            if(data.resources && data.resources.length>0){
+                var resources = await moveResources(data.resources,user.username,data.name);
+                data.resources = resources;
+            }
             makeJSONFile(data,user.username,data.name,'datapackage.json');
             var XML = generateXML(data);
             return XML;
